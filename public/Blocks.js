@@ -7,10 +7,10 @@ class Blocks {
     blockDraw() {
         ctx.fillStyle = 'blue'
         ctx.fillRect(
-            this.x * 24,
-            this.y * 24,
-            24,
-            24
+            this.x * 32 + 341,
+            this.y * 32,
+            32,
+            32
         )
     }
 }

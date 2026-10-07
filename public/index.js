@@ -5,12 +5,11 @@ document.body.style.overflow = 'hidden' //hides scrollwheels
 
 const socket = io();
 
-canvas.width = innerWidth
-canvas.height = innerHeight
+const GAME_WIDTH = 1366
+const GAME_HEIGHT = 768
 
-const width = canvas.width
-const height = canvas.height
-console.log(width, height)
+canvas.width = GAME_WIDTH
+canvas.height = GAME_HEIGHT
 
 const players = {}
 const frontendProjectiles = {}
@@ -89,14 +88,23 @@ socket.on('loadMap', (map) => {
 function animate() {
     requestAnimationFrame(animate)
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT)
 
-    let temp = Math.abs(width/3 - innerHeight)
     ctx.fillStyle = 'red'
-    ctx.fillRect(width - 1366, height - 768,1366, 768)
+    ctx.fillRect(
+        GAME_WIDTH * 0.25,
+        0,
+        GAME_WIDTH * 0.75,
+        GAME_HEIGHT
+    )
 
     ctx.fillStyle = 'yellow'
-    ctx.fillRect(width - 1366, height - 768, 1366/4, 768)
+    ctx.fillRect(
+        0,
+        0,
+        GAME_WIDTH * 0.25,
+        GAME_HEIGHT
+    )
 
     for (const id in players) {
         players[id].draw()
@@ -131,11 +139,9 @@ let tempStratInputs = ""
 
 setInterval(() => {
     if (keys.a.pressed) {
-        players[socket.id].x -= speed
         socket.emit('keydown', 'KeyA')
     }
     if (keys.d.pressed) {
-        players[socket.id].x += speed
         socket.emit('keydown', 'KeyD')
     }
     if (keys.w.pressed) {
@@ -165,6 +171,10 @@ setInterval(() => {
         console.log(tempStratInputs)
     }
 }, 15)
+
+setInterval(() => {
+    console.log(players[socket.id].x, players[socket.id].y)
+}, 1000)
 
 window.addEventListener("keydown", (event) => {
     if (!players[socket.id]) return
@@ -239,8 +249,13 @@ let mouseX = 0
 let mouseY = 0
 
 canvas.addEventListener('mousemove', (event) => {
-    mouseX = event.clientX
-    mouseY = event.clientY
+    const rect = canvas.getBoundingClientRect()
+
+    mouseX = (event.clientX - rect.left) *
+        (GAME_WIDTH / rect.width)
+
+    mouseY = (event.clientY - rect.top) *
+        (GAME_HEIGHT / rect.height)
 })
 
 socket.on('getDirection', ({ damage, type }) => {

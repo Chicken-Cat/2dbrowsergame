@@ -118,8 +118,8 @@ setInterval(() => {
         players[id].y += players[id].yv
 
         // temp floor collision
-        if (players[id].y >= 818) {
-            players[id].y = 818
+        if (players[id].y >= 688) {
+            players[id].y = 688
             players[id].touchingGround = true
             players[id].jumpsLeft = 2
         }
@@ -127,8 +127,8 @@ setInterval(() => {
             players[id].y = 0
             players[id].yv = 0
         }
-        if (players[id].x <= 0) {
-            players[id].x = 0
+        if (players[id].x <= 341) {
+            players[id].x = 341
         }
         if (players[id].x >= 1316) {
             players[id].x = 1316
@@ -160,13 +160,14 @@ function loadMap() {
     const data = fs.readFileSync('public/maps/map1.txt', 'utf8')
     const rows = data.trim().split('\n')
 
-    for (let y = 0; y < 32; y++) {
+    for (let y = 0; y < 24; y++) {
         map[y] = []
 
         for (let x = 0; x < 32; x++) {
             map[y][x] = rows[y][x]
         }
     }
+    console.log(map)
 }
 
 
