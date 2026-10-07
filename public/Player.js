@@ -1,5 +1,6 @@
 class Player {
     constructor(x, y, color, yv, touchingGround, jumpsLeft) {
+        console.log(x, y, color, yv, touchingGround, jumpsLeft)
         this.x = x
         this.y = y
         this.color = color

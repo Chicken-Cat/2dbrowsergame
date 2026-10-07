@@ -16,18 +16,36 @@ team and ffa modes
 THINGS TO DO
 
 maps
-jump
-projectiles
 changing colors
 changing names
 sprites
 health
 collisions
+click to fire after inputing stratagem
+-> if you get hit, cancels the stratagem
 
 THINGS DONE
 
 left and right
 multiplayer
 stratagem inputs
+jump
+projectiles
 
 strategic sorcery
+
+
+MAP MAKING
+1: format for making maps (32x32 grid of 0's and #'s, # is a block and 0 is empty)
+2: server reads the #'s and fills in those spaces with ctx fillRect
+3: upon game start, randomly pick a map file
+3: AABB detection for players, projectiles, and explosions
+4: strong enough projectiles or explosions can break blocks
+5: upon round end, randomly pick a different map
+6: repeat
+
+
+to do
+- fix the red and yellow background generation and scale the whole game based on browser size
+- AABB collision for map blocks
+- bounding box within the red space
